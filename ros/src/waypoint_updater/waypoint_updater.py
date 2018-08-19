@@ -34,7 +34,6 @@ class WaypointUpdater(object):
         rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 
         rospy.Subscriber('/traffic_waypoint',  Int32, self.traffic_cb)
-        rospy.Subscriber('/obstacle_waypoint', Int32, self.obstacle_cb)
         rospy.Subscriber('/current_velocity', TwistStamped, self.current_velocity_cb)
 
         self.publisher = rospy.Publisher('final_waypoints', Lane, queue_size=1)
@@ -55,7 +54,6 @@ class WaypointUpdater(object):
     def pose_cb(self, msg): self.current_pose = msg
     def waypoints_cb(self, waypoints): self.base_waypoints = waypoints
     def traffic_cb(self, msg): self.traffic_waypoint = msg.data
-    def obstacle_cb(self, msg): self.obstacle_waypoint = msg.data
     def current_velocity_cb(self, msg): self.current_velocity = msg.twist.linear.x
 
     def dl(self, a, b): return math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2  + (a.z-b.z)**2)
