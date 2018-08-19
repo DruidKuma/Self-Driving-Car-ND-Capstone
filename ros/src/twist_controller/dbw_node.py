@@ -29,12 +29,10 @@ class DBWNode(object):
     def __init__(self):
         rospy.init_node('dbw_node')
 
-        # Enable flag
         self.enabled = False
-        rospy.logwarn('TwistController disabled...')
 
-        self.required_linear_velocity = None
-        self.required_angular_velocity = None
+        self.required_linear_velocity = None # m/s
+        self.required_angular_velocity = None # rad/s
         self.current_linear_velocity = None
         self.steer_feedback = None
 
@@ -85,26 +83,16 @@ class DBWNode(object):
                 self.publish(throttle, brake, steering)
             rate.sleep()
 
-    """
-    Callbacks
-    """
-    def current_velocity_cb(self, msg):
-        # Get current velocity from topic
-        self.current_linear_velocity = msg.twist.linear.x
+
+    def current_velocity_cb(self, msg): self.current_linear_velocity = msg.twist.linear.x
 
     def twist_cmd_cb(self, msg):
-        # Get the desired velocity from waypoint_followe
-        self.required_linear_velocity = msg.twist.linear.x     # Linear velocity in m/s
-        self.required_angular_velocity = msg.twist.angular.z   # Angular velocity in rad/s
+        self.required_linear_velocity = msg.twist.linear.x
+        self.required_angular_velocity = msg.twist.angular.z
 
     def dbw_enabled_cb(self, msg):
         self.enabled = msg.data
-
-        if self.enabled:
-            rospy.logwarn('TwistController enabled!')
-        else:
-            rospy.logwarn('TwistController disabled...')
-            # Reset PID controllers
+        if not self.enabled:
             self.controller.reset()
 
     def publish(self, throttle, brake, steer):
