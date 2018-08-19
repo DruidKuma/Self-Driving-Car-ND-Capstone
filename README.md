@@ -1,4 +1,45 @@
-This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
+# Udacity Capstone Project
+## System Integration Project
+
+## Team: Eyjafjallajökull (Island Volcano)
+
+This our final project implementation of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car.
+
+|     Image              |     Name      |  LinkedIn    |     Email   |
+|------------------------|---------------|----------------|---------------|
+| <img src="./imgs/iurii_miedviediev.png" alt="Iurii Miedviediev" width="150" height="150"> | Iurii Miedviediev | [Linkedin](https://www.linkedin.com/in/druidkuma) | <druidkuma@gmail.com> |
+| <img src="./imgs/ivan_korniyenko.png" alt="Ivan Korniyenko" width="150" height="150"> | Ivan Korniyenko | [Linkedin](https://www.linkedin.com/in/ivan-korniyenko-27741b66) | <vankor1991@gmail.com> |
+
+### Project Description
+Solution contains thress individual nodes (Drive By Wire, Waypoint Updater, Traffic Light Detector). For each node an independent ROS was implemented. Nodes are communicating with each other using pub-sub.
+
+Overall system architecture design can be seen from the next  diagram:
+ ![Architecture](./imgs/architecture.png)
+ 
+#### DBW Node
+Steering is controller by yaw controller. Throttle and brake are controlled using PID controller. Tuned params which we used in final version:
+
+| Parameter | Value  |
+|-----------|--------|
+| P | 0.7    |
+| I | 0.00015 |
+| D | 0.009   |
+
+#### Waipoint Updated Node
+This node receives updates from traffic light detector to know which light is on now, and publishes next waypoints for the vehicle.
+Our system basically has two states, one for moving, and one for stopping. When there is no traffic lights nearby, or if the light is green, car is moving normally (accelerating).
+
+If car if close to a traffic light, and light is red, car begin to stop. It does it via planning waypoints to the traffic light with deceleration on each waypoint so that last waypoint before the traffic light is zero (full stop).
+
+
+#### Traffic Light Detection Node
+We decided to use Deep Learning for detecting traffic lights in images from camera.
+We have used SSD (Single Shot MultiBox Detector) model. It was designed for object detection in real-time.
+The SSD object detection involves extracting feature maps and then applying convolution filters to detect objects:
+
+![SSD Model](./imgs/ssd_model.png)
+
+### Installation
 
 Please use **one** of the two installation options, either native **or** docker installation.
 
@@ -32,9 +73,6 @@ Run the docker file
 docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capstone
 ```
 
-### Port Forwarding
-To set up port forwarding, please refer to the [instructions from term 2](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/16cf4a78-4fc7-49e1-8621-3450ca938b77)
-
 ### Usage
 
 1. Clone the project repository
@@ -55,20 +93,3 @@ source devel/setup.sh
 roslaunch launch/styx.launch
 ```
 4. Run the simulator
-
-### Real world testing
-1. Download [training bag](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic_light_bag_file.zip) that was recorded on the Udacity self-driving car.
-2. Unzip the file
-```bash
-unzip traffic_light_bag_file.zip
-```
-3. Play the bag file
-```bash
-rosbag play -l traffic_light_bag_file/traffic_light_training.bag
-```
-4. Launch your project in site mode
-```bash
-cd CarND-Capstone/ros
-roslaunch launch/site.launch
-```
-5. Confirm that traffic light detection works on real life images
