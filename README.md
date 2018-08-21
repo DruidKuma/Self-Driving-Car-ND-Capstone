@@ -25,7 +25,7 @@ Steering is controller by yaw controller. Throttle and brake are controlled usin
 | I | 0.00015 |
 | D | 0.009   |
 
-#### Waipoint Updated Node
+#### Waypoint Updater Node
 This node receives updates from traffic light detector to know which light is on now, and publishes next waypoints for the vehicle.
 Our system basically has two states, one for moving, and one for stopping. When there is no traffic lights nearby, or if the light is green, car is moving normally (accelerating).
 
