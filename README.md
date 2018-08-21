@@ -7,7 +7,7 @@ This our final project implementation of the Udacity Self-Driving Car Nanodegree
 
 |     Image              |     Name      |  LinkedIn    |     Email   |
 |------------------------|---------------|----------------|---------------|
-| <img src="./imgs/iurii_miedviediev.png" alt="Iurii Miedviediev" width="150" height="150"> | Iurii Miedviediev | [Linkedin](https://www.linkedin.com/in/druidkuma) | <druidkuma@gmail.com> |
+| <img src="./imgs/iurii_miedviediev.png" alt="Iurii Miedviediev" width="150" height="150"> | Iurii Miedviediev (Team Lead) | [Linkedin](https://www.linkedin.com/in/druidkuma) | <druidkuma@gmail.com> |
 | <img src="./imgs/ivan_korniyenko.png" alt="Ivan Korniyenko" width="150" height="150"> | Ivan Korniyenko | [Linkedin](https://www.linkedin.com/in/ivan-korniyenko-27741b66) | <vankor1991@gmail.com> |
 
 ### Project Description
